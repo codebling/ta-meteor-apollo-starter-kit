@@ -10,6 +10,7 @@ import PushBtn from '/app/ui/components/smart/pwa/push-btn';
 import Feedback from '/app/ui/components/dumb/feedback';
 import Alert from '/app/ui/components/dumb/alert';
 import Loading from '/app/ui/components/dumb/loading';
+import SearchContext from '../../context/search-context';
 
 const HomePage = ({
   intl: { formatMessage: t },
@@ -41,8 +42,11 @@ const HomePage = ({
     );
   }
 
+  const { searchValue } = React.useContext(SearchContext);
+
   return (
     <div>
+      <span>here is the search value: {searchValue}</span>
       {subscribed ? (
         <UnsubscribeBtn
           disabled={disabled}
