@@ -13,7 +13,7 @@ const SearchContextProvider = ({ children }) => {
   return (
     <SearchContext.Provider
       value={{
-        searchInput: ControlledInput,
+        SearchInput: ControlledInput,
         searchValue: inputValue,
       }}
     >
