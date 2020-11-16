@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Loading from '/app/ui/components/dumb/loading';
 
-export const GET_USER = gql`
+export const SEARCH_QUERY = gql`
   query search {
     searchQuery
   }
@@ -50,5 +50,5 @@ SearchQueryProvider.propTypes = {
 };
 
 export default compose(
-  graphql(GET_USER, { options: { fetchPolicy: 'cache-only' }, name: 'searchQueryData' }),
+  graphql(SEARCH_QUERY, { options: { fetchPolicy: 'cache-only' }, name: 'searchQueryData' }),
 )(SearchQueryProvider);
