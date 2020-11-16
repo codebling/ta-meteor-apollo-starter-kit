@@ -9,6 +9,7 @@ import { HttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
 import apolloLogger from 'apollo-link-logger';
+import SearchContextProvider from '../../context/search-context-provider';
 import { onTokenChange, getLoginToken } from '/app/ui/apollo-client/auth';
 import createBrowserHistory from 'history/createBrowserHistory';
 import 'unfetch/polyfill';
@@ -112,27 +113,29 @@ async function renderAsync() {
   const ClientApp = ({ component }) => (
     <Router history={history}>
       <ApolloProvider client={client}>
-        <Switch>
-          {/* Map our locales to separate routes */}
-          { otherLocales.map(locale => (
-            <Route
-              key={locale}
-              path={`/${locale}/`}
-              render={props => <App component={component} {...props} locale={locale} section="app" />}
-            />
-          ))}
+        <SearchContextProvider>
+          <Switch>
+            {/* Map our locales to separate routes */}
+            { otherLocales.map(locale => (
+              <Route
+                key={locale}
+                path={`/${locale}/`}
+                render={props => <App component={component} {...props} locale={locale} section="app" />}
+              />
+            ))}
 
-          { primaryLocale && (
-            <Route
-              key={primaryLocale}
-              path="/"
-              render={props => <App component={component} {...props} locale={primaryLocale} section="app" />}
-            />
-          )}
+            { primaryLocale && (
+              <Route
+                key={primaryLocale}
+                path="/"
+                render={props => <App component={component} {...props} locale={primaryLocale} section="app" />}
+              />
+            )}
 
-          {/* If no valid locale is given, we redirect to same route with the preferred locale prefixed */}
-          <Route render={({ location }) => <Redirect to={`/${window.__PREFERRED_LOCALE__ || otherLocales[0]}${location.pathname}`} />} />
-        </Switch>
+            {/* If no valid locale is given, we redirect to same route with the preferred locale prefixed */}
+            <Route render={({ location }) => <Redirect to={`/${window.__PREFERRED_LOCALE__ || otherLocales[0]}${location.pathname}`} />} />
+          </Switch>
+        </SearchContextProvider>
       </ApolloProvider>
     </Router>
   );
